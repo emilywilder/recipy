@@ -1,4 +1,6 @@
 import argparse
+from urllib.parse import urlparse
+from recipy.providers.base import BaseProvider
 
 
 def main():
@@ -7,4 +9,6 @@ def main():
 
     args = parser.parse_args()
 
-    print("TODO: scrape {0}".format(args.url))
+    hostname = urlparse(args.url).hostname
+    provider = BaseProvider.getProvider(hostname)
+    print("TODO: use the provider {0} to scrape {1}".format(provider, args.url))
