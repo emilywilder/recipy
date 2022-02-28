@@ -1,3 +1,6 @@
+from recipy.providers.exceptions import NoProviderException
+
+
 class BaseProvider(object):
 
     @classmethod
@@ -18,4 +21,4 @@ class BaseProvider(object):
         if hostname in _providers.keys():
             return _providers.get(hostname)
         else:
-            raise Exception("No provider for {0}".format(hostname))
+            raise NoProviderException(hostname)
