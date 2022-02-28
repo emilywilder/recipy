@@ -1,0 +1,3 @@
+import recipy
+
+recipy.main()
