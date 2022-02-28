@@ -1,4 +1,6 @@
 import argparse
+import sys
+import logging
 from urllib.parse import urlparse
 from recipy.providers.base import BaseProvider
 
@@ -10,5 +12,9 @@ def main():
     args = parser.parse_args()
 
     hostname = urlparse(args.url).hostname
-    provider = BaseProvider.getProvider(hostname)
-    print("TODO: use the provider {0} to scrape {1}".format(provider, args.url))
+    try:
+        provider = BaseProvider.getProvider(hostname)
+        print("TODO: use the provider {0} to scrape {1}".format(provider, args.url))
+    except Exception as e:
+        logging.error(e.message)
+        sys.exit(1)
