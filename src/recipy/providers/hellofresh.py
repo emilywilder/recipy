@@ -1,5 +1,5 @@
-from recipy.providers.base import BaseProvider
+from recipy.providers import base
 
 
-class HelloFresh(BaseProvider):
+class HelloFresh(base.BaseProvider):
     provides_for = "www.hellofresh.com"
