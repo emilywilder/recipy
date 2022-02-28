@@ -2,7 +2,7 @@ import argparse
 import sys
 import logging
 from urllib.parse import urlparse
-from recipy.providers.base import BaseProvider
+from recipy.providers import base
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
 
     hostname = urlparse(args.url).hostname
     try:
-        provider = BaseProvider.getProvider(hostname)
+        provider = base.BaseProvider.getProvider(hostname)
         print("TODO: use the provider {0} to scrape {1}".format(provider, args.url))
     except Exception as e:
         logging.error(e.message)
