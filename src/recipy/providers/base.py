@@ -9,11 +9,13 @@ class BaseProvider(object):
 
     @classmethod
     def getProviders(cls):
-        _providers = {}
-        for _provider in cls.__subclasses__():
-            _provides_for = _provider.provides_for
-            _providers[_provides_for] = _provider
-        return _providers
+        '''return a dictionary of providers in the format:
+
+        { provides_for: <class Provider> }
+
+        where each key is a hostname and the value is the provider class for that hostname
+        '''
+        return dict([(x.provides_for, x) for x in cls.__subclasses__()])
 
     @classmethod
     def getProvider(cls, hostname):
