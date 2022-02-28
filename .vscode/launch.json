@@ -11,7 +11,7 @@
             "module": "recipy",
             // "cwd": "${workspaceFolder}/src",
             "args": [
-                "https://www.hellofresh.com/"
+                "https://www.hellofresh.com/recipes/pasta-primavera-61dddefc001b1730763d5887"
             ]
         },
         {
