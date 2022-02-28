@@ -1,9 +1,13 @@
+import requests
+from bs4 import BeautifulSoup
+
 from recipy.providers.exceptions import NoProviderException
 
 
 class BaseProvider(object):
     def __init__(self, url):
         self.url = url
+        self.soup = None
 
     @classmethod
     def providersFor(cls):
@@ -29,3 +33,7 @@ class BaseProvider(object):
 
     def scrape(self):
         raise NotImplementedError("submodule did not implement the scrape method")
+
+    def getSoup(self):
+        r = requests.get(self.url)
+        self.soup = BeautifulSoup(r.text, 'html.parser')
