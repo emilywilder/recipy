@@ -2,6 +2,8 @@ from recipy.providers.exceptions import NoProviderException
 
 
 class BaseProvider(object):
+    def __init__(self, url):
+        self.url = url
 
     @classmethod
     def providersFor(cls):
@@ -24,3 +26,6 @@ class BaseProvider(object):
             return _providers.get(hostname)
         else:
             raise NoProviderException(hostname)
+
+    def scrape(self):
+        raise NotImplementedError("submodule did not implement the scrape method")

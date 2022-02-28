@@ -13,8 +13,9 @@ def main():
 
     hostname = urlparse(args.url).hostname
     try:
-        provider = base.BaseProvider.getProvider(hostname)
-        print("TODO: use the provider {0} to scrape {1}".format(provider, args.url))
+        providerClass = base.BaseProvider.getProvider(hostname)
+        provider = providerClass(args.url)
+        provider.scrape()
     except Exception as e:
         logging.error(str(e))
         sys.exit(1)
