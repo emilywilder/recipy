@@ -1,3 +1,3 @@
-import recipy
+from recipy.cmds import recipy
 
 recipy.main()
