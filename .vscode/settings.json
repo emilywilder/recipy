@@ -7,5 +7,5 @@
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--ignore=E501", "--verbose", "--extend-ignore=E401 */__init__.py"]
+    "python.linting.flake8Args": ["--verbose"]
 }
