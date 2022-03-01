@@ -7,4 +7,9 @@ class HelloFresh(base.BaseProvider):
     def scrape(self):
         if not self.soup:
             self.getSoup()
-        print(self.soup.find("h1").text)
+        return {
+            "name": self.getName()
+        }
+
+    def getName(self):
+        return self.soup.find("h1").text

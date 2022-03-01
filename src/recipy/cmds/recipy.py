@@ -4,6 +4,8 @@ import logging
 from urllib.parse import urlparse
 from recipy.providers import base
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Scrape recipe contents into a YAML file')
@@ -15,7 +17,8 @@ def main():
     try:
         providerClass = base.BaseProvider.getProvider(hostname)
         provider = providerClass(args.url)
-        provider.scrape()
+        result = provider.scrape()
+        logging.info(result)
     except Exception as e:
         logging.error(str(e))
         sys.exit(1)
