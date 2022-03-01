@@ -15,4 +15,4 @@ class HelloFresh(base.BaseProvider):
 
     @property
     def name(self):
-        return self.soup.find("h1").text
+        return self.soup.find("h1").get_text()
