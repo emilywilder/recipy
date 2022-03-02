@@ -5,17 +5,20 @@ from recipy import schemas
 from recipy.scraper import Scraper
 
 
-class MockHelloFreshResponse:
+class MockResponse:
     with open("tests/test_hellofresh.html", 'r') as f:
         text = f.read()
 
 
-def test_get_text(monkeypatch):
+@pytest.fixture
+def mock_response(monkeypatch):
     def mock_get(*args, **kwargs):
-        return MockHelloFreshResponse()
+        return MockResponse()
 
     monkeypatch.setattr(requests, "get", mock_get)
 
+
+def test_get_text(mock_response):
     schema = schemas.PaprikaSchema()
     hf_test_url = "https://www.hellofresh.com/testrecipe"
     scraper = Scraper(hf_test_url, schema)
