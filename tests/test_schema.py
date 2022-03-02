@@ -11,6 +11,10 @@ class TestHelloFresh():
         for attr in recipy.schemas.HelloFreshSchema.specification:
             assert attr in hf.schema
 
+    def test_attrs(self):
+        hf = recipy.schemas.HelloFreshSchema()
+        assert hf.attrs == hf.schema
+
     def test_good_data(self):
         hf = recipy.schemas.HelloFreshSchema()
         data = {"name": "emily"}
