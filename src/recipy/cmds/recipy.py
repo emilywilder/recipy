@@ -13,12 +13,22 @@ def main():
 
     args = parser.parse_args()
 
-    hostname = urlparse(args.url).hostname
     try:
-        providerClass = get_provider(hostname)
-        provider = providerClass(args.url)
-        result = provider.scrape()
-        logging.info(result)
+        logging.info(scraper(args.url))
     except Exception as e:
         logging.error(str(e))
         sys.exit(1)
+
+
+def scraper(url):
+    import requests
+    from bs4 import BeautifulSoup
+
+    hostname = urlparse(url).hostname
+
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'html.parser')
+
+    providerClass = get_provider(hostname)
+    provider = providerClass(soup)
+    return {"name": provider.name}
