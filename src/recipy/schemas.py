@@ -14,7 +14,7 @@ class BaseSchema(Schema):
         return self.schema
 
 
-class HelloFreshSchema(BaseSchema):
+class PaprikaSchema(BaseSchema):
     '''Provides a class to describe the structure and validation of Paprika imports.
 
     As per their specification (https://www.paprikaapp.com/help/mac/#importrecipes):

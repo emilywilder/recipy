@@ -20,7 +20,7 @@ def main():
 
     try:
         # get schema and scraper
-        schema = schemas.HelloFreshSchema()
+        schema = schemas.PaprikaSchema()
         scraper = Scraper(args.url, schema)
 
         # perform scraping of website
