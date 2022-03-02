@@ -2,6 +2,7 @@ import argparse
 import sys
 import logging
 from recipy.scraper import Scraper
+from recipy import schemas
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -13,8 +14,10 @@ def main():
     args = parser.parse_args()
 
     try:
-        scraper = Scraper(args.url)
+        schema = schemas.HelloFreshSchema()
+        scraper = Scraper(args.url, schema)
         scraper.scrape()
+        schema.validate(scraper.data)
         logging.info(scraper.data)
     except Exception as e:
         logging.error(str(e))
