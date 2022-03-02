@@ -2,7 +2,7 @@ import argparse
 import sys
 import logging
 from urllib.parse import urlparse
-from recipy.providers import base
+from recipy.providers.utils import get_provider
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -15,7 +15,7 @@ def main():
 
     hostname = urlparse(args.url).hostname
     try:
-        providerClass = base.BaseProvider.getProvider(hostname)
+        providerClass = get_provider(hostname)
         provider = providerClass(args.url)
         result = provider.scrape()
         logging.info(result)
