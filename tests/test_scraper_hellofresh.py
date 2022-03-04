@@ -5,6 +5,9 @@ from recipy import schemas
 from recipy.scraper import Scraper
 
 
+HF_TEST_URL = "https://www.hellofresh.com/testrecipe"
+
+
 class MockResponse:
     with open("tests/test_hellofresh.html", 'r') as f:
         text = f.read()
@@ -20,7 +23,7 @@ def mock_response(monkeypatch):
 
 def test_get_text(mock_response):
     schema = schemas.PaprikaSchema()
-    hf_test_url = "https://www.hellofresh.com/testrecipe"
-    scraper = Scraper(hf_test_url, schema)
+
+    scraper = Scraper(HF_TEST_URL, schema)
     scraper.scrape()
     assert scraper.data.get("name") == "Recipy"
