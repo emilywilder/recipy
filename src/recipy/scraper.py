@@ -1,4 +1,5 @@
 from urllib.parse import urlparse
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -13,19 +14,19 @@ class Scraper(object):
         self.provider = None
         self.data = {}
 
-    def _getSoup(self):
+    def _get_soup(self):
         r = requests.get(self.url)
         self.soup = BeautifulSoup(r.text, 'html.parser')
 
-    def _getProvider(self):
+    def _get_provider(self):
         hostname = urlparse(self.url).hostname
         self.provider = utils.get_provider(hostname)(self.soup)
 
     def scrape(self):
         if not self.soup:
-            self._getSoup()
+            self._get_soup()
         if not self.provider:
-            self._getProvider()
+            self._get_provider()
 
         for _attr in self.schema.attrs:
             self.data[_attr] = getattr(self.provider, _attr)

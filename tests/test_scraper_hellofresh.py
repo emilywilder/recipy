@@ -4,7 +4,6 @@ import requests
 from recipy import schemas
 from recipy.scraper import Scraper
 
-
 HF_TEST_URL = "https://www.hellofresh.com/testrecipe"
 
 

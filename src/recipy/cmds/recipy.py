@@ -1,6 +1,7 @@
 import argparse
-import sys
 import logging
+import sys
+
 import yaml
 
 from recipy.scraper import Scraper

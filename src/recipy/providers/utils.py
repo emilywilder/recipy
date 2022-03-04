@@ -1,5 +1,5 @@
-from .exceptions import NoProviderException
 from .base import BaseProvider
+from .exceptions import NoProviderException
 
 
 def get_providers() -> dict:
