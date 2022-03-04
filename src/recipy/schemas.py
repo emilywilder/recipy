@@ -39,5 +39,6 @@ ingredients: |
   salt
     '''
     specification = {
-        "name": str
+        "name": str,
+        "prep_time": str
     }
