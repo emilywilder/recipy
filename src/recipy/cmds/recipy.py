@@ -4,8 +4,9 @@ import sys
 
 import yaml
 
-from recipy.scraper import Scraper
 from recipy import schemas
+from recipy import scraper
+
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -22,22 +23,22 @@ def main():
     try:
         # get schema and scraper
         schema = schemas.PaprikaSchema()
-        scraper = Scraper(args.url, schema)
+        _scraper = scraper.Scraper(args.url, schema)
 
         # perform scraping of website
-        scraper.scrape()
+        _scraper.scrape()
 
         # validate data with schema
-        schema.validate(scraper.data)
+        schema.validate(_scraper.data)
 
         # save data in yaml format
         filename = "{0}.yml".format(
-            scraper.data.get("name")
+            _scraper.data.get("name")
         )
         with open(filename, 'w') as f:
-            yaml.dump(scraper.data, f)
+            yaml.dump(_scraper.data, f)
 
-        logging.info(scraper.data)
+        logging.info(_scraper.data)
     except Exception as e:
         logging.error(str(e))
         sys.exit(1)
