@@ -21,9 +21,10 @@ def mock_response(monkeypatch):
     monkeypatch.setattr(requests, "get", mock_get)
 
 
-def test_get_text(mock_response):
+@pytest.mark.parametrize("attr, expected", [("name", "Recipy"), ("prep_time", "22 minutes")], indirect=False)
+def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()
 
     scraper = Scraper(HF_TEST_URL, schema)
     scraper.scrape()
-    assert scraper.data.get("name") == "Recipy"
+    assert scraper.data.get(attr) == expected
