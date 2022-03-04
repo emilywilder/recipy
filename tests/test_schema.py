@@ -28,6 +28,6 @@ class TestPaprika():
 
     def test_bad_data_key(self):
         s = recipy.schemas.PaprikaSchema()
-        data = {"schemaTest": True}
-        with pytest.raises(schema.SchemaMissingKeyError):
+        data = {"schemaTest": True, "name": "emily", "prep_time": "forever"}
+        with pytest.raises(schema.SchemaWrongKeyError):
             s.validate(data)
