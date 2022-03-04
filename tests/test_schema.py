@@ -4,8 +4,8 @@ import schema
 import recipy.schemas
 
 
-class TestPaprika():
-    '''tests for PaprikaSchema'''
+class TestPaprika:
+    """tests for PaprikaSchema"""
     def test_spec(self):
         s = recipy.schemas.PaprikaSchema()
         for attr in recipy.schemas.PaprikaSchema.specification:

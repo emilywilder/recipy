@@ -15,7 +15,7 @@ class BaseSchema(Schema):
 
 
 class PaprikaSchema(BaseSchema):
-    '''Provides a class to describe the structure and validation of Paprika imports.
+    """Provides a class to describe the structure and validation of Paprika imports.
 
     As per their specification (https://www.paprikaapp.com/help/mac/#importrecipes):
 
@@ -37,7 +37,7 @@ ingredients: |
   1/2 lb meat
   1/2 lb vegetables
   salt
-    '''
+    """
     specification = {
         "name": str,
         "prep_time": str
