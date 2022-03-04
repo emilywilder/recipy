@@ -17,12 +17,12 @@ class TestPaprika():
 
     def test_good_data(self):
         s = recipy.schemas.PaprikaSchema()
-        data = {"name": "emily"}
+        data = {"name": "emily", "prep_time": "forever"}
         assert s.validate(data)
 
     def test_bad_data_value(self):
         s = recipy.schemas.PaprikaSchema()
-        data = {"name": 1}
+        data = {"name": 1, "prep_time": "forever"}
         with pytest.raises(schema.SchemaError):
             s.validate(data)
 
