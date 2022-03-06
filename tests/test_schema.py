@@ -33,16 +33,21 @@ class TestPaprika:
         spec = recipy.schemas.PaprikaSchema.specification.get(attr)
         assert schema.Schema(spec).validate(test)
 
+
+@pytest.fixture()
+def make_schema_and_data(request):
+    request.cls.paprika_schema = recipy.schemas.PaprikaSchema()
+    request.cls.data = make_schema_data(request.cls.paprika_schema)
+
+
+@pytest.mark.usefixtures('make_schema_and_data')
+class TestPaprikaErrors:
     def test_wrong_data_type(self):
-        s = recipy.schemas.PaprikaSchema()
-        data = make_schema_data(s)
-        data['name'] = 1
+        self.data['name'] = 1
         with pytest.raises(schema.SchemaError):
-            s.validate(data)
+            self.paprika_schema.validate(self.data)
 
     def test_wrong_key_present(self):
-        s = recipy.schemas.PaprikaSchema()
-        data = make_schema_data(s)
-        data['notSupposedToBeHere'] = True
+        self.data['notSupposedToBeHere'] = True
         with pytest.raises(schema.SchemaWrongKeyError):
-            s.validate(data)
+            self.paprika_schema.validate(self.data)
