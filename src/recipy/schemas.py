@@ -44,7 +44,7 @@ ingredients: |
         "source": str,
         "source_url": str,
         "prep_time": str,
-        # "cook_time": str,
+        "cook_time": str,
         # "on_favorites": str,
         # "categories": list,
         # "nutritional_info": str,
