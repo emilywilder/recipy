@@ -42,5 +42,6 @@ ingredients: |
         "name": str,
         "servings": str,
         "source": str,
+        "source_url": str,
         "prep_time": str
     }
