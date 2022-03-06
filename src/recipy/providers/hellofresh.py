@@ -16,6 +16,15 @@ class HelloFresh(base.BaseProvider):
         ])
 
     @property
+    def servings(self) -> str:
+        tag = self.soup.select_one("[data-test-id='serving-amount-container']")
+        divs = tag.find_all("div")
+        return "{0} to {1} servings".format(
+            divs[2].get_text().strip(),
+            divs[3].get_text().strip()
+        )
+
+    @property
     def prep_time(self) -> str:
         tag = self.soup.select_one("[data-translation-id='recipe-detail.cooking-time']")
         return tag.find_parent().find_next_sibling().get_text().strip()
