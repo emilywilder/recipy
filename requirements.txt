@@ -1,5 +1,7 @@
-requests
-bs4
-pyyaml
-schema
-pytest
+requests~=2.27.1
+bs4~=0.0.1
+pyyaml~=6.0
+schema~=0.7.5
+pytest~=7.0.1
+tldextract~=3.2.0
+beautifulsoup4~=4.10.0

@@ -1,3 +1,5 @@
+import tldextract
+
 from recipy.providers import base
 
 
@@ -25,11 +27,11 @@ class HelloFresh(base.BaseProvider):
         )
 
     @property
-    def source(self):
-        return self.soup.find('title').get_text().split('|')[-1].strip()
+    def source(self) -> str:
+        return tldextract.extract(self.source_url).registered_domain
 
     @property
-    def source_url(self):
+    def source_url(self) -> str:
         return self.soup.find('head').find("link", rel="canonical").get("href")
 
     @property
