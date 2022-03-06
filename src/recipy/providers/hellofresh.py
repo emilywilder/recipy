@@ -25,6 +25,10 @@ class HelloFresh(base.BaseProvider):
         )
 
     @property
+    def source(self):
+        return self.soup.find('title').get_text().split('|')[-1].strip()
+
+    @property
     def prep_time(self) -> str:
         tag = self.soup.select_one("[data-translation-id='recipe-detail.cooking-time']")
         return tag.find_parent().find_next_sibling().get_text().strip()

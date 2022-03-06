@@ -41,5 +41,6 @@ ingredients: |
     specification = {
         "name": str,
         "servings": str,
+        "source": str,
         "prep_time": str
     }
