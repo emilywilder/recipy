@@ -23,6 +23,7 @@ def mock_response(monkeypatch):
 @pytest.mark.parametrize("attr, expected",
                          [("name", "Recipy with additional awesomeness"),
                           ("servings", "3 to 6 servings"),
+                          ("source", "HelloFresh"),
                           ("prep_time", "22 minutes")])
 def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()
