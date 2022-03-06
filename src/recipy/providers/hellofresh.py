@@ -43,3 +43,7 @@ class HelloFresh(base.BaseProvider):
     def cook_time(self) -> str:
         tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.preparation-time'})
         return tag.find_parent().find_next_sibling().get_text().strip()
+
+    @property
+    def categories(self) -> list:
+        return [self.source]

@@ -26,7 +26,8 @@ def mock_response(monkeypatch):
                           ("source", "hellofresh.com"),
                           ("source_url", "https://www.hellofresh.com/recipes/recipy-with-extra-awesome"),
                           ("prep_time", "22 minutes"),
-                          ("cook_time", "55 minutes")
+                          ("cook_time", "55 minutes"),
+                          ("categories", ["hellofresh.com"]),
                           ])
 def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()
