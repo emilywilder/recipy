@@ -57,3 +57,8 @@ class HelloFresh(base.BaseProvider):
         # discard last div contents, as this is just disclaimer details
         details = list(' '.join(x.stripped_strings) for x in tag)[:-1]
         return "\n".join(details)
+
+    @property
+    def difficulty(self) -> str:
+        nv_tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.cooking-difficulty'})
+        return nv_tag.find_next('span').get_text().strip()
