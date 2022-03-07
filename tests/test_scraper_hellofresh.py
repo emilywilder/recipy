@@ -28,6 +28,10 @@ def mock_response(monkeypatch):
                           ("prep_time", "22 minutes"),
                           ("cook_time", "55 minutes"),
                           ("categories", ["hellofresh.com"]),
+                          ("nutritional_info", '\n'.join([
+                              "Calories 1000 kcal", "Fat 5 g", "Saturated Fat 10 g", "Carbohydrate 15 g", "Sugar 20 g",
+                              "Dietary Fiber 25 g", "Protein 30 g", "Cholesterol 35 mg", "Sodium 40 mg"])),
+
                           ])
 def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()

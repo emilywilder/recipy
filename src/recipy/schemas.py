@@ -47,7 +47,7 @@ ingredients: |
         "cook_time": str,
         # "on_favorites": str,
         "categories": list,
-        # "nutritional_info": str,
+        "nutritional_info": str,
         # "difficulty": str,
         # "rating": int,
         # "notes": str,
