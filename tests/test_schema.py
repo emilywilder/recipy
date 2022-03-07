@@ -2,13 +2,18 @@ import pytest
 import schema
 
 import recipy.schemas
+from recipy.exports.yaml import Literal, Folded
 
 
 def make_schema_data(_schema: schema.Schema) -> dict:
     """create skeleton data according to given schema"""
     data = {}
     for (k, v) in _schema.schema.items():
-        if issubclass(v, str):
+        if issubclass(v, Literal):
+            data[k] = Literal('')
+        elif issubclass(v, Folded):
+            data[k] = Folded('')
+        elif issubclass(v, str):
             data[k] = ''
         elif issubclass(v, list):
             data[k] = []

@@ -2,11 +2,9 @@ import argparse
 import logging
 import sys
 
-import yaml
-
 from recipy import schemas
 from recipy import scraper
-
+from recipy import exports
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -36,7 +34,7 @@ def main():
             _scraper.data.get("name")
         )
         with open(filename, 'w') as f:
-            yaml.dump(_scraper.data, f)
+            exports.yaml.dump(_scraper.data, f)
 
         logging.info(_scraper.data)
     except Exception as e:
