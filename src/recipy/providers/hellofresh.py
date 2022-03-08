@@ -56,7 +56,7 @@ class HelloFresh(base.BaseProvider):
 
     @property
     def categories(self) -> list:
-        return [self.source]
+        return [self.soup.title.text.split('|')[-1].strip()]
 
     @property
     def nutritional_info(self) -> str:
