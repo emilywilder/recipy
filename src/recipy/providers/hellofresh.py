@@ -74,7 +74,7 @@ class HelloFresh(base.BaseProvider):
         return nv_tag.find_next('span').get_text().strip()
 
     @property
-    def notes(self) -> Literal:
+    def description(self) -> Literal:
         r_tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.read-more'})
         return Literal(r_tag.find_parent('div').p.get_text().strip())
 

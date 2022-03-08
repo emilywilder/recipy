@@ -59,7 +59,7 @@ class PaprikaSchema(BaseSchema):
         "nutritional_info": str,
         "difficulty": str,
         # "rating": int,
-        "notes": yaml.Literal,
+        "description": yaml.Literal,
         "photo": str,
         "ingredients": yaml.Literal,
         "directions": yaml.Literal,
