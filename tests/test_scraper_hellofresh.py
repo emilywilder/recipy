@@ -17,17 +17,22 @@ def get_sample_img_data():
         return f.read()
 
 
+# FIXME: when this breaks it breaks all tests in the parametrization
 class MockResponse:
-    with open("tests/test_hellofresh.html", 'r') as f:
-        text = f.read()
-
-    content = get_sample_img_data()
+    def __init__(self, resource):
+        if resource == "https://www.hellofresh.com/testrecipe":
+            with open("tests/test_hellofresh.html", 'r') as f:
+                self.text = f.read()
+        elif resource == "tests/sample.jpeg":
+            self.content = get_sample_img_data()
+        else:
+            raise Exception("can't handle resource {0}".format(resource))
 
 
 @pytest.fixture
 def mock_response(monkeypatch):
     def mock_get(*args, **kwargs):
-        return MockResponse()
+        return MockResponse(args[0])
 
     monkeypatch.setattr(requests, "get", mock_get)
 
