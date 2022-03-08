@@ -62,5 +62,6 @@ class PaprikaSchema(BaseSchema):
         "notes": yaml.Literal,
         "photo": str,
         "ingredients": yaml.Literal,
+        "directions": yaml.Literal,
     }
 

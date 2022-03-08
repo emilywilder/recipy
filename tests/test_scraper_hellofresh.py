@@ -21,8 +21,15 @@ Ingredient 11
 Ingredient 12
 1 teaspoon Ingredient 13
 1 tablespoon Ingredient 15 (Contains Allergen 2)
-1 teaspoon Ingredient 16"""
+1 teaspoon Ingredient 16""",
+    'directions': """• Step 1 Part 1 • Step 1 Part 2
+• Step 2 Part 1 • Step 2 Part 2
+• Step 3 Part 1 • Step 3 Part 2
+• Step 4 Part 1 • Step 4 Part 2
+• Step 5 Part 1 • Step 5 Part 2
+• Step 6 Part 1 • Step 6 Part 2""",
 }
+
 
 def b64encode(data):
     return base64.b64encode(data).decode('utf8')
@@ -68,6 +75,7 @@ def mock_response(monkeypatch):
                           ("notes", 'Recipe read more'),
                           ("photo", b64encode(get_sample_img_data())),
                           ("ingredients", HF_TEST_DATA.get('ingredients')),
+                          ("directions", HF_TEST_DATA.get('directions')),
                           ])
 def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()

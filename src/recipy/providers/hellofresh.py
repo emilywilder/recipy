@@ -1,6 +1,7 @@
 import tldextract
 import base64
 import requests
+import re
 
 from recipy.providers import base
 from recipy.exports.yaml import Literal
@@ -111,3 +112,11 @@ class HelloFresh(base.BaseProvider):
 
         return text
 
+    @property
+    def directions(self) -> Literal:
+        # get all divs matching instruction steps
+        s = re.compile('recipeDetailFragment.instructions.step-[0-9]')
+        divs = self.soup.find_all('div', attrs={'data-test-id': s})
+        # Each instruction div has one <p> giving the instructional text. If any instruction has newlines, replace
+        # them with spaces.
+        return Literal('\n'.join([x.find('p').get_text().strip().replace('\n', ' ') for x in divs]))
