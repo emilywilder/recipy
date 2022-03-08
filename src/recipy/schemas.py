@@ -52,7 +52,7 @@ ingredients: |
         "difficulty": str,
         # "rating": int,
         "notes": yaml.Literal,
-        # "photo": str,
+        "photo": str,
         # "ingredients": str
     }
 

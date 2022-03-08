@@ -1,5 +1,6 @@
 import pytest
 import requests
+import base64
 
 from recipy import schemas
 from recipy.scraper import Scraper
@@ -7,9 +8,20 @@ from recipy.scraper import Scraper
 HF_TEST_URL = "https://www.hellofresh.com/testrecipe"
 
 
+def b64encode(data):
+    return base64.b64encode(data).decode('utf8')
+
+
+def get_sample_img_data():
+    with open('tests/sample.jpeg', 'rb') as f:
+        return f.read()
+
+
 class MockResponse:
     with open("tests/test_hellofresh.html", 'r') as f:
         text = f.read()
+
+    content = get_sample_img_data()
 
 
 @pytest.fixture
@@ -33,6 +45,7 @@ def mock_response(monkeypatch):
                               "Dietary Fiber 25 g", "Protein 30 g", "Cholesterol 35 mg", "Sodium 40 mg"])),
                           ("difficulty", 'Über hard'),
                           ("notes", 'Recipe read more'),
+                          ("photo", b64encode(get_sample_img_data()))
                           ])
 def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()

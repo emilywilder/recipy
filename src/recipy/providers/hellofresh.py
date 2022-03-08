@@ -1,4 +1,6 @@
 import tldextract
+import base64
+import requests
 
 from recipy.providers import base
 from recipy.exports.yaml import Literal
@@ -9,13 +11,17 @@ class HelloFresh(base.BaseProvider):
     """
     provides_for = "www.hellofresh.com"
 
+    def _name_h1(self) -> str:
+        return self.soup.find("h1").get_text().strip()
+
+    def _name_h4(self) -> str:
+        return self.soup.find("h4").get_text().strip()
+
     @property
     def name(self) -> str:
-        h1 = self.soup.find("h1")
-        h4 = h1.find_next_sibling("h4")
         return " ".join([
-            h1.get_text().strip(),
-            h4.get_text().strip()
+            self._name_h1(),
+            self._name_h4()
         ])
 
     @property
@@ -68,3 +74,9 @@ class HelloFresh(base.BaseProvider):
     def notes(self) -> Literal:
         r_tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.read-more'})
         return Literal(r_tag.find_parent('div').p.get_text().strip())
+
+    @property
+    def photo(self) -> str:
+        img_src = self.soup.find('img', attrs={'alt': self._name_h1()}).attrs.get('src')
+        r = requests.get(img_src)
+        return base64.b64encode(r.content).decode('utf-8')
