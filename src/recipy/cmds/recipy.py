@@ -34,7 +34,7 @@ def main():
             _scraper.data.get("name")
         )
         with open(filename, 'w') as f:
-            exports.yaml.dump(_scraper.data, f)
+            exports.yaml.dump(_scraper.data, f, allow_unicode=True)
 
         logging.info(_scraper.data)
     except Exception as e:
