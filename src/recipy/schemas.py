@@ -53,6 +53,6 @@ ingredients: |
         # "rating": int,
         "notes": yaml.Literal,
         "photo": str,
-        # "ingredients": str
+        "ingredients": yaml.Literal
     }
 

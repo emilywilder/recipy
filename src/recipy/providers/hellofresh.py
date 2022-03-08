@@ -80,3 +80,32 @@ class HelloFresh(base.BaseProvider):
         img_src = self.soup.find('img', attrs={'alt': self._name_h1()}).attrs.get('src')
         r = requests.get(img_src)
         return base64.b64encode(r.content).decode('utf-8')
+
+    @property
+    def ingredients(self) -> Literal:
+        # get container of in and out of box divs
+        container = self.soup.find('div', attrs={'data-test-id': 'recipeDetailFragment.ingredients'})
+        # contains ingredients delivered in the box
+        box = container.find_all('div', recursive=False)[-2].find('div')
+        box_contents = box.find_all('div', recursive=False)
+        # contains ingredients not delivered in the box
+        pantry = container.find_all('div', recursive=False)[-1].find('div')
+        pantry_contents = pantry.div.find_all('div', recursive=False)
+
+        # pass box and pantry divs to a method to get formatted text of contents
+        contents = list(map(self.get_ingredient_text, box_contents + pantry_contents))
+        return Literal('\n'.join(contents))
+
+    @staticmethod
+    def get_ingredient_text(div):
+        # get the ingredient text
+        text = ' '.join([x.get_text().strip() for x in div.find_all('p')]).strip()
+
+        # if the ingredient contains allergens, format ingredient text to include them
+        contains = div.find('span', attrs={"data-translation-id": "recipe-detail.contains"})
+        if contains:
+            contents = contains.find_parent('span').find_next_sibling('span').get_text().strip()
+            text = "{0} ({1} {2})".format(text, contains.text.strip(), contents)
+
+        return text
+
