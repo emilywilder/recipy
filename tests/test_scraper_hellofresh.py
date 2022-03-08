@@ -5,31 +5,6 @@ import base64
 from recipy import schemas
 from recipy.scraper import Scraper
 
-HF_TEST_DATA = {
-    'url': "https://www.hellofresh.com/testrecipe",
-    'ingredients': """1 unit Ingredient 1
-1 unit Ingredient 2
-2 unit Ingredient 3
-1 unit Ingredient 4
-6 ounce Ingredient 5 (Contains Allergen 1)
-1 ounce Ingredient 6 (Contains Allergen 2)
-2 tablespoon Ingredient 7 (Contains Allergen 2)
-¼ cup Ingredient 8 (Contains Allergen 2)
-1 tablespoon Ingredient 9
-4 ounce Ingredient 10
-Ingredient 11
-Ingredient 12
-1 teaspoon Ingredient 13
-1 tablespoon Ingredient 15 (Contains Allergen 2)
-1 teaspoon Ingredient 16""",
-    'directions': """• Step 1 Part 1 • Step 1 Part 2
-• Step 2 Part 1 • Step 2 Part 2
-• Step 3 Part 1 • Step 3 Part 2
-• Step 4 Part 1 • Step 4 Part 2
-• Step 5 Part 1 • Step 5 Part 2
-• Step 6 Part 1 • Step 6 Part 2""",
-}
-
 
 def b64encode(data):
     return base64.b64encode(data).decode('utf8')
@@ -74,12 +49,22 @@ def mock_response(monkeypatch):
                           ("difficulty", 'Über hard'),
                           ("notes", 'Recipe read more'),
                           ("photo", b64encode(get_sample_img_data())),
-                          ("ingredients", HF_TEST_DATA.get('ingredients')),
-                          ("directions", HF_TEST_DATA.get('directions')),
+                          ("ingredients", '\n'.join([
+                              "1 unit Ingredient 1", "1 unit Ingredient 2", "2 unit Ingredient 3",
+                              "1 unit Ingredient 4", "6 ounce Ingredient 5 (Contains Allergen 1)",
+                              "1 ounce Ingredient 6 (Contains Allergen 2)",
+                              "2 tablespoon Ingredient 7 (Contains Allergen 2)",
+                              "¼ cup Ingredient 8 (Contains Allergen 2)", "1 tablespoon Ingredient 9",
+                              "4 ounce Ingredient 10", "Ingredient 11", "Ingredient 12", "1 teaspoon Ingredient 13",
+                              "1 tablespoon Ingredient 15 (Contains Allergen 2)", "1 teaspoon Ingredient 16"])),
+                          ("directions", '\n'.join([
+                              "• Step 1 Part 1 • Step 1 Part 2", "• Step 2 Part 1 • Step 2 Part 2",
+                              "• Step 3 Part 1 • Step 3 Part 2", "• Step 4 Part 1 • Step 4 Part 2",
+                              "• Step 5 Part 1 • Step 5 Part 2", "• Step 6 Part 1 • Step 6 Part 2"])),
                           ])
 def test_get_attrs(attr, expected, mock_response):
     schema = schemas.PaprikaSchema()
 
-    scraper = Scraper(HF_TEST_DATA.get('url'), schema)
+    scraper = Scraper('https://www.hellofresh.com/testrecipe', schema)
     scraper.scrape()
     assert scraper.data.get(attr) == expected
