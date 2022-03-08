@@ -1,4 +1,5 @@
 from schema import Schema
+from recipy.exports import yaml
 
 
 class BaseSchema(Schema):
@@ -50,7 +51,7 @@ ingredients: |
         "nutritional_info": str,
         "difficulty": str,
         # "rating": int,
-        # "notes": str,
+        "notes": yaml.Literal,
         # "photo": str,
         # "ingredients": str
     }

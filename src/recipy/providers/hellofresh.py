@@ -1,6 +1,7 @@
 import tldextract
 
 from recipy.providers import base
+from recipy.exports.yaml import Literal
 
 
 class HelloFresh(base.BaseProvider):
@@ -62,3 +63,8 @@ class HelloFresh(base.BaseProvider):
     def difficulty(self) -> str:
         nv_tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.cooking-difficulty'})
         return nv_tag.find_next('span').get_text().strip()
+
+    @property
+    def notes(self) -> Literal:
+        r_tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.read-more'})
+        return Literal(r_tag.find_parent('div').p.get_text().strip())
