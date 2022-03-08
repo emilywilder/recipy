@@ -117,6 +117,21 @@ class HelloFresh(base.BaseProvider):
         # get all divs matching instruction steps
         s = re.compile('recipeDetailFragment.instructions.step-[0-9]')
         divs = self.soup.find_all('div', attrs={'data-test-id': s})
-        # Each instruction div has one <p> giving the instructional text. If any instruction has newlines, replace
-        # them with spaces.
-        return Literal('\n'.join([x.find('p').get_text().strip().replace('\n', ' ') for x in divs]))
+        # Each instruction div has one <p> giving the instructional text.
+
+        return Literal("\n\n".join(list(map(self.format_direction, divs))))
+
+    @staticmethod
+    def format_direction(div) -> str:
+        # get direction step, used in html structure
+        step = div.attrs.get('data-test-id').split('-')[-1]
+        # get direction number, used in direction text
+        instruction_num = div.find("div",
+                                   attrs={"data-test-id": "recipeDetailFragment.instructions.step-image-" + step}
+                                   ).get_text().strip()
+        # get direction text from <p>
+        text = div.find("p").get_text().strip()
+        # replace the first • with the direction number, then split on • to get a list of sub-directions
+        directions = text.replace("•", "{0}. ".format(instruction_num), 1).split('•')
+        # remove existing newlines from each sub-direction and join all sub-directions by newlines
+        return '\n'.join([x.replace('\n', ' ').strip() for x in directions])
