@@ -58,7 +58,8 @@ def mock_method(monkeypatch):
                               "Calories 1000 kcal", "Fat 5 g", "Saturated Fat 10 g", "Carbohydrate 15 g", "Sugar 20 g",
                               "Dietary Fiber 25 g", "Protein 30 g", "Cholesterol 35 mg", "Sodium 40 mg"])),
                           ("difficulty", 'Über hard'),
-                          ("description", 'Recipe read more'),
+                          ("description", '\n\n'.join(["Recipe read more", "Tags: Tag 1, Tag 2, Tag 3",
+                                                       "Allergens: Allergen 1, Allergen 2"])),
                           ("photo", b64encode(get_sample_img_data())),
                           ("ingredients", '\n'.join([
                               "1 unit Ingredient 1", "1 unit Ingredient 2", "2 unit Ingredient 3",
@@ -72,12 +73,14 @@ def mock_method(monkeypatch):
                               "1.  Step 1 Part 1\nStep 1 Part 2", "2.  Step 2 Part 1\nStep 2 Part 2",
                               "3.  Step 3 Part 1\nStep 3 Part 2", "4.  Step 4 Part 1\nStep 4 Part 2",
                               "5.  Step 5 Part 1\nStep 5 Part 2", "6.  Step 6 Part 1\nStep 6 Part 2"])),
-                          ("notes", "Obtained by {name}-{version} on {date}".format(
-                              name=recipy.__name__,
-                              version=recipy.VERSION,
-                              date=MockDate.today().strftime("%B %d, %Y"),
-                          )),
-                          ])
+                          ("notes", '\n\n'.join([
+                              "Utensils: Utensil 1, Utensil 2, Utensil 3, Utensil 4, Utensil 5",
+                              "Obtained by {name}-{version} on {date}".format(
+                                  name=recipy.__name__,
+                                  version=recipy.VERSION,
+                                  date=MockDate.today().strftime("%B %d, %Y")
+                              )])),
+                         ])
 def test_get_attrs(attr, expected, mock_method):
     schema = schemas.PaprikaSchema()
 

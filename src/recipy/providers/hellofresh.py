@@ -86,7 +86,11 @@ class HelloFresh(base.BaseProvider):
     @property
     def description(self) -> Literal:
         r_tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.read-more'})
-        return Literal(r_tag.find_parent('div').p.get_text().strip())
+        _description = r_tag.find_parent('div').p.get_text().strip()
+        _tags = "Tags: {0}".format(", ".join(self.tags))
+        _allergens = "Allergens: {0}".format(", ".join(self.allergens))
+
+        return Literal("\n\n".join([_description, _tags, _allergens]))
 
     @property
     def photo(self) -> str:
@@ -148,4 +152,27 @@ class HelloFresh(base.BaseProvider):
 
     @property
     def notes(self) -> Literal:
-        return Literal(self._stamp())
+        _utensils = "Utensils: {0}".format(", ".join(self.utensils))
+        return Literal('\n\n'.join([_utensils, self._stamp()]))
+
+    @staticmethod
+    def _filter_items_from_tag(tag) -> list:
+        return list(filter(lambda x: x != '•', tag.stripped_strings))
+
+    @property
+    def allergens(self) -> list:
+        tag = self.soup.find('span', attrs={"data-translation-id": "recipe-detail.allergens"})
+        allergens = tag.find_parent('span').find_next_sibling()
+        return self._filter_items_from_tag(allergens)
+
+    @property
+    def tags(self) -> list:
+        tag = self.soup.find('span', attrs={"data-translation-id": "recipe-detail.tags"})
+        tags = tag.find_parent('span').find_next_sibling()
+        return self._filter_items_from_tag(tags)
+
+    @property
+    def utensils(self) -> list:
+        tag = self.soup.find('div', attrs={"data-test-id": "utensil-desktop-title"})
+        utensils_tag = tag.find_parent('div').find_parent('div').find_next_sibling('div')
+        return self._filter_items_from_tag(utensils_tag)
