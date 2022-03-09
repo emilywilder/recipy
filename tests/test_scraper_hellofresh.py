@@ -53,7 +53,7 @@ def mock_method(monkeypatch):
                           ("prep_time", "22 minutes"),
                           ("total_time", "55 minutes"),
                           ("cook_time", "33 minutes"),
-                          ("categories", ["HelloFresh"]),
+                          ("categories", ["HelloFresh", "Tag 1", "Tag 2", "Tag 3"]),
                           ("nutritional_info", '\n'.join([
                               "Calories 1000 kcal", "Fat 5 g", "Saturated Fat 10 g", "Carbohydrate 15 g", "Sugar 20 g",
                               "Dietary Fiber 25 g", "Protein 30 g", "Cholesterol 35 mg", "Sodium 40 mg"])),
