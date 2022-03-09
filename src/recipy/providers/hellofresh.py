@@ -135,3 +135,7 @@ class HelloFresh(base.BaseProvider):
         directions = text.replace("•", "{0}. ".format(instruction_num), 1).split('•')
         # remove existing newlines from each sub-direction and join all sub-directions by newlines
         return '\n'.join([x.replace('\n', ' ').strip() for x in directions])
+
+    @property
+    def notes(self) -> Literal:
+        return Literal(self._stamp())

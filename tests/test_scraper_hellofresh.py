@@ -1,9 +1,12 @@
 import pytest
 import requests
 import base64
+import datetime
 
+import recipy
 from recipy import schemas
 from recipy.scraper import Scraper
+import recipy.providers
 
 
 def b64encode(data):
@@ -27,12 +30,19 @@ class MockResponse:
             raise Exception("can't handle resource {0}".format(resource))
 
 
+class MockDate:
+    @classmethod
+    def today(cls):
+        return datetime.datetime.fromisoformat('2018-02-26')
+
+
 @pytest.fixture
-def mock_response(monkeypatch):
+def mock_method(monkeypatch):
     def mock_get(*args, **kwargs):
         return MockResponse(args[0])
 
     monkeypatch.setattr(requests, "get", mock_get)
+    monkeypatch.setattr(recipy.providers.base, "date", MockDate)
 
 
 @pytest.mark.parametrize("attr, expected",
@@ -61,8 +71,13 @@ def mock_response(monkeypatch):
                               "1.  Step 1 Part 1\nStep 1 Part 2", "2.  Step 2 Part 1\nStep 2 Part 2",
                               "3.  Step 3 Part 1\nStep 3 Part 2", "4.  Step 4 Part 1\nStep 4 Part 2",
                               "5.  Step 5 Part 1\nStep 5 Part 2", "6.  Step 6 Part 1\nStep 6 Part 2"])),
+                          ("notes", "Obtained by {name}-{version} on {date}".format(
+                              name=recipy.__name__,
+                              version=recipy.VERSION,
+                              date=MockDate.today().strftime("%B %d, %Y"),
+                          )),
                           ])
-def test_get_attrs(attr, expected, mock_response):
+def test_get_attrs(attr, expected, mock_method):
     schema = schemas.PaprikaSchema()
 
     scraper = Scraper('https://www.hellofresh.com/testrecipe', schema)
