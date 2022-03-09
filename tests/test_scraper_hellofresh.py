@@ -38,7 +38,7 @@ class MockDate:
 
 @pytest.fixture
 def mock_method(monkeypatch):
-    def mock_get(*args, **kwargs):
+    def mock_get(*args):
         return MockResponse(args[0])
 
     monkeypatch.setattr(requests, "get", mock_get)
