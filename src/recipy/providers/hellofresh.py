@@ -66,7 +66,7 @@ class HelloFresh(base.BaseProvider):
         # use stripped_strings to handle case where newlines are used
         # discard last div contents, as this is just disclaimer details
         details = list(' '.join(x.stripped_strings) for x in tag)[:-1]
-        return "\n".join(details)
+        return Literal("\n".join(details))
 
     @property
     def difficulty(self) -> str:

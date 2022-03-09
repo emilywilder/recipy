@@ -56,7 +56,7 @@ class PaprikaSchema(BaseSchema):
         "cook_time": str,
         # "on_favorites": str,
         "categories": list,
-        "nutritional_info": str,
+        "nutritional_info": yaml.Literal,
         "difficulty": str,
         # "rating": int,
         "description": yaml.Literal,
