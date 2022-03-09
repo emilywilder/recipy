@@ -53,6 +53,7 @@ class PaprikaSchema(BaseSchema):
         "source": str,
         "source_url": str,
         "prep_time": str,
+        "total_time": str,
         "cook_time": str,
         # "on_favorites": str,
         "categories": list,

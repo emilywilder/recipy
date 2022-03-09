@@ -51,7 +51,8 @@ def mock_method(monkeypatch):
                           ("source", "hellofresh.com"),
                           ("source_url", "https://www.hellofresh.com/recipes/recipy-with-extra-awesome"),
                           ("prep_time", "22 minutes"),
-                          ("cook_time", "55 minutes"),
+                          ("total_time", "55 minutes"),
+                          ("cook_time", "33 minutes"),
                           ("categories", ["HelloFresh"]),
                           ("nutritional_info", '\n'.join([
                               "Calories 1000 kcal", "Fat 5 g", "Saturated Fat 10 g", "Carbohydrate 15 g", "Sugar 20 g",

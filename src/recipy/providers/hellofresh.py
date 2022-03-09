@@ -49,10 +49,20 @@ class HelloFresh(base.BaseProvider):
         return tag.find_parent().find_next_sibling().get_text().strip()
 
     @property
-    def cook_time(self) -> str:
+    def total_time(self) -> str:
         # hellofresh.com uses recipe-detail.preparation-time for cook time
         tag = self.soup.find('span', attrs={'data-translation-id': 'recipe-detail.preparation-time'})
         return tag.find_parent().find_next_sibling().get_text().strip()
+
+    @staticmethod
+    def _get_minutes(time):
+        return int(time.split()[0])
+
+    @property
+    def cook_time(self) -> str:
+        # assumes total_time and prep_time only in minutes
+        _cook_time = self._get_minutes(self.total_time) - self._get_minutes(self.prep_time)
+        return "{0} minutes".format(_cook_time)
 
     @property
     def categories(self) -> list:
