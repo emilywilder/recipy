@@ -47,7 +47,7 @@ def mock_method(monkeypatch):
 
 @pytest.mark.parametrize("attr, expected",
                          [("name", "Recipy with additional awesomeness"),
-                          ("servings", "3 to 6 servings"),
+                          ("servings", "3 servings"),
                           ("source", "hellofresh.com"),
                           ("source_url", "https://www.hellofresh.com/recipes/recipy-with-extra-awesome"),
                           ("prep_time", "22 minutes"),

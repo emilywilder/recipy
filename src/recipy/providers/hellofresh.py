@@ -29,10 +29,8 @@ class HelloFresh(base.BaseProvider):
     def servings(self) -> str:
         tag = self.soup.find('div', attrs={'data-test-id': 'serving-amount-container'})
         divs = tag.find_all("div")
-        return "{0} to {1} servings".format(
-            divs[2].get_text().strip(),
-            divs[3].get_text().strip()
-        )
+        # only use first number, as this represents the ingredients given
+        return "{0} servings".format(divs[2].get_text().strip())
 
     @property
     def source(self) -> str:
